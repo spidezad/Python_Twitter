@@ -21,10 +21,13 @@ Learning:
     python twitter streamer
     http://www.kalisch.biz/2013/10/harvesting-twitter-with-python/
 
+<<<<<<< HEAD
     twitter and encoding
     http://www.quartertothree.com/game-talk/showthread.php?73978-Data-mining-Twitter-for-sentiments-about-the-new-consoles
     
 
+=======
+>>>>>>> origin/master
 Limitations:
     Seems like the tweets limited to 7 days or 100 results (??)
     or do streaming and store the tweets?? --> need OAuth1
@@ -41,6 +44,7 @@ TODO:
     need convert special character such as &
     Need to remove personal tweets such as I for stock (see any post processing suitable??)
     monitor and add in hash tag # stock if qty too high??
+<<<<<<< HEAD
     Repeated tweets to remove
     A lot of irrelevent data set
 
@@ -51,11 +55,16 @@ Learnings:
     preprint a file
     http://stackoverflow.com/questions/5914627/prepend-line-to-beginning-of-a-file
 
+=======
+>>>>>>> origin/master
 
 """
 
 import os, re, sys, time, datetime, copy, calendar
+<<<<<<< HEAD
 import fileinput
+=======
+>>>>>>> origin/master
 import pandas
 from twython import Twython
 
@@ -245,6 +254,7 @@ class StockTweetsReader(TweetsReader):
                 stockname (str): stock name to search for tweets.
         """
         self.target_stock = stockname
+<<<<<<< HEAD
 
     def set_search_list_and_form_search_query(self):
         """ Set the search list for individual stocks.
@@ -279,6 +289,42 @@ class StockTweetsReader(TweetsReader):
             self.get_tweets_for_single_stock()
             print '*'*18, '\n'
 
+=======
+
+    def set_search_list_and_form_search_query(self):
+        """ Set the search list for individual stocks.
+            Set to self.search_list and self.twitter_search_query.
+        """
+        self.search_list = ['"' + self.target_stock + ' ' + n + '"'for n in self.modified_part_search_list]
+        self.form_seach_str_query()
+
+    def get_tweets_for_single_stock(self):
+        """ Get tweets based on the search list of single stock.
+        """
+        print self.target_stock
+        self.set_search_list_and_form_search_query()
+        print self.twitter_search_query
+        self.perform_twitter_search()
+        #self.print_results()
+        self.count_num_tweets_per_day(print_count =0)
+        self.store_results()
+
+    def store_results(self):
+        """ Store the results for each of the stocks.
+            Store to self.combined_tweet_count, self.combined_tweet_results
+        """
+        self.combined_tweet_count[self.target_stock] = self.tweet_count_per_search
+        self.combined_tweet_results[self.target_stock] = self.search_results
+
+    def iterate_results_for_all_stocks(self):
+        """ Get the results for all stocks.
+        """
+        for n in self.stocklist:
+            self.set_target_stock(n)
+            self.get_tweets_for_single_stock()
+            print '*'*18, '\n'
+
+>>>>>>> origin/master
     def print_full_results(self):
         """ print the consolidated data set.
 
@@ -293,7 +339,11 @@ if __name__ == '__main__':
     """ Running the twitter 
     """
     
+<<<<<<< HEAD
     choice = 7
+=======
+    choice = 3
+>>>>>>> origin/master
 
     if choice ==1:
         search_list = ['apple','meat','kiwi',]
@@ -307,7 +357,11 @@ if __name__ == '__main__':
     if choice == 2:
         """Particularly for stocks. """
         ## group together or search each keyword one by one??
+<<<<<<< HEAD
         search_list = ["SG GE2015 " ]#, 'Nam cheong shares','Nam Cheong Sentiment', 'Nam Cheong buy', 'Nam Cheong sell']
+=======
+        search_list = ["Genting HK US$ sell" ]#, 'Nam cheong shares','Nam Cheong Sentiment', 'Nam Cheong buy', 'Nam Cheong sell']
+>>>>>>> origin/master
         exclude_list = []
 
         hh = TweetsReader(search_list, exclude_list)
@@ -321,15 +375,22 @@ if __name__ == '__main__':
         """Particularly for stocks. """
         ## group together or search each keyword one by one??
         import pandas
+<<<<<<< HEAD
         #stockfile = r'c:\data\full_oct02.csv' 
         #stock_df = pandas.read_csv(stockfile)
         #stocklist = list(stock_df['NAME'])
         stocklist = ['Sembcorp', 'Keppel Corp']
+=======
+        stockfile = r'c:\data\full_oct02.csv'
+        stock_df = pandas.read_csv(stockfile)
+        stocklist = list(stock_df['NAME'])
+>>>>>>> origin/master
 
         hh = StockTweetsReader(stocklist)
         hh.iterate_results_for_all_stocks()
         hh.print_full_results()
 
+<<<<<<< HEAD
         print
         print
         for n in hh.combined_tweet_results.keys():
@@ -385,6 +446,9 @@ if __name__ == '__main__':
                   OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
 
         final_step = twitter.get_authorized_tokens(oauth_verifier)
+=======
+
+>>>>>>> origin/master
 
         OAUTH_TOKEN = final_step['oauth_token']
         OAUTH_TOKEN_SECRET = final_step['oauth_token_secret']
